@@ -1,0 +1,60 @@
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+}
+ 
+.carousel-track {
+  display: flex;
+  width: calc(250px * 10); /* (5 images * 2 loops) */
+}
+
+/* Show 4 images at a time */
+.slide-wrapper {
+  flex: 0 0 9%; /* 100 / 4 = 25% */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+.slide {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 🔁 Continuous scrolling animation */
+.is-animated {
+  animation: scroll 20s linear infinite;
+}
+
+/* ⏸ Pause on hover */
+.carousel:hover .is-animated {
+  animation-play-state: paused;
+}
+
+/* 👇 Keyframes for looping scroll */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .slide-wrapper {
+    flex: 0 0 50%; /* 2 visible */
+  }
+}
+
+@media (max-width: 480px) {
+  .slide-wrapper {
+    flex: 0 0 100%; /* 1 visible */
+  }
+}

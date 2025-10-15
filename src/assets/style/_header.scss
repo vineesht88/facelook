@@ -1,0 +1,161 @@
+.facelook-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transform: translateY(0);
+
+    &.scrolled {
+        background-color: rgba(0, 0, 0, 0.85);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transform: translateY(0);
+
+        .header-top-area {
+            background-color: transparent;
+        }
+    }
+
+    .header-top-area {
+        transition: background-color 0.3s ease, padding 0.3s ease, max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+        background-color: var(--primary-color);
+        width: 100%;
+        padding: 10px 32px;
+        display: flex;
+        color: var(--white);
+        justify-content: space-between;
+        max-height: 120px;
+        opacity: 1;
+        transform: translateY(0);
+        overflow: hidden;
+
+        .top-area-left {
+            display: flex;
+            gap: 15px;
+             align-items: center;
+
+            .social-icons {
+                display: flex;
+                gap: 7px;
+
+                li {
+                    a {
+                        color: var(--white);
+                        .social-icon{
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+            .email-id{
+                color: var(--white);
+                font-size: 14px;
+                display: flex;
+                gap: 7px;
+                align-items: center;
+                .email-icon{
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .top-area-right{
+            display: flex;
+            gap: 15px;
+             align-items: center;
+            .widget-holder{
+                display: flex;
+                gap: 20px;
+                span{
+                    font-size: 14px;
+                    color: var(--white);
+                    display: flex;
+                    gap: 7px;
+                    .widget-icon{
+                        font-size: 18px;
+                        color: var(--white);
+                    }
+
+                }
+            }
+            
+        }
+
+
+    }
+
+    .page-header{
+        display: flex;
+        padding: 20px 35px;
+        transition: padding 0.3s ease;
+
+        .logo-wrapper {
+            display: grid;
+            width: 6rem;
+
+            .logo-image {
+                grid-area: 1 / 1;
+                width: 100%;
+                height: auto;
+                transition: opacity 0.3s ease;
+
+                &.is-hidden {
+                    opacity: 0;
+                }
+
+                &.is-visible {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .header-main-nav{
+            a{
+                color: var(--text-color);
+                transition: color 0.3s ease;
+                position: relative;
+                font-size: 17px;
+                font-weight: 300;
+                text-transform: uppercase;
+                &.menu-active{
+                    &::after{
+                            content: '';
+                            position: absolute;
+                            bottom: -.3em;
+                            left: 0;
+                            height: 1px;
+                            width: 100%;
+                            transition: width .3s ease-out;
+                            background-color: var(--primary-color);
+                    }
+                }
+            }
+        }
+    }
+
+    &.scrolled {
+        .header-top-area {
+            padding: 0 32px;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+        }
+
+        .page-header {
+            padding: 20px 35px;
+
+            .header-main-nav {
+                a {
+                    color: var(--white);
+                }
+
+                a.menu-active::after {
+                    background-color: var(--white);
+                }
+            }
+        }
+    }
+}

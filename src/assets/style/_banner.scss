@@ -1,0 +1,70 @@
+/* Image layers fade */
+.fade-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  z-index: 0;
+}
+.fade-layer.active {
+  opacity: 1;
+  z-index: 2;
+}
+.fade-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Centered caption box */
+.caption-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 240px;
+  max-width: 80%;
+  text-align: center;
+  color: #fff;
+  padding: 20px 28px;
+  border: 2px solid rgba(255,255,255,.85);
+  border-radius: 12px;
+  background-color: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+  /* default starting state (overridden by animations below) */
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+/* Left: fade from bottom -> center */
+.caption-left.show {
+  animation: captionLeftFadeUp 0.6s ease forwards;
+}
+@keyframes captionLeftFadeUp {
+  0%   { transform: translate(-50%, -30%); opacity: 0; }
+  100% { transform: translate(-50%, -50%); opacity: 1; }
+}
+
+/* Right: subtle fade + scale */
+.caption-right.show {
+  animation: captionRightFadeIn 0.6s ease forwards;
+}
+@keyframes captionRightFadeIn {
+  0%   { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+}
+
+/* Text inside caption (stagger) */
+.caption-box h2,
+.caption-box p {
+ 
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.caption-box.show h2,
+.caption-box.show p {
+  opacity: 1;
+  transform: translateY(0);
+}
+.caption-box p { opacity: .9; transition-delay: .12s; }

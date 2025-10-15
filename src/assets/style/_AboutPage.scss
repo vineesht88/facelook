@@ -1,0 +1,151 @@
+.about-page {
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 3.5rem 1.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  color: #e2e8f0;
+}
+
+.about-page__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.about-page__title {
+  font-size: clamp(2.5rem, 6vw, 3.3rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.about-page__summary {
+  font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+  line-height: 1.6;
+  color: #cbd5f5;
+  margin: 0 auto;
+  max-width: 720px;
+}
+
+.about-page__content {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.about-page__mission {
+  padding: 2.5rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(15, 23, 42, 0.6);
+  box-shadow: 0 20px 35px -25px rgba(15, 23, 42, 0.65);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.about-page__mission-title {
+  font-size: 1.65rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.about-page__mission p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #cbd5f5;
+}
+
+.about-page__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-page__values,
+.about-page__milestones {
+  border-radius: 2rem;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(15, 23, 42, 0.55);
+  padding: 2.2rem;
+  box-shadow: 0 18px 32px -24px rgba(15, 23, 42, 0.6);
+}
+
+.about-page__values h3,
+.about-page__milestones h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.2rem;
+}
+
+.about-page__values ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+  color: #cbd5f5;
+}
+
+.about-page__values li::before {
+  content: '• ';
+  color: rgba(129, 140, 248, 0.8);
+}
+
+.about-page__milestones dl {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 0;
+}
+
+.about-page__milestone {
+  border-radius: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.4rem;
+}
+
+.about-page__milestone dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #c7d2fe;
+}
+
+.about-page__milestone-title {
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.about-page__milestone-copy {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: #cbd5f5;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .about-page__intro {
+    text-align: left;
+  }
+
+  .about-page__summary {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-page__content {
+    grid-template-columns: 1fr 0.95fr;
+    align-items: start;
+  }
+}
