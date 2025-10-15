@@ -9,7 +9,7 @@ const images = [brand01, brand02, brand03, brand04, brand05];
 // Duplicate for seamless looping
 const loopImages = [...images, ...images];
 
-export default function ImageCarousel(): JSX.Element {
+export default function ImageCarousel(): JSX.Element { 
   return (
     <div className="carousel">
       <div className="carousel-track is-animated">
