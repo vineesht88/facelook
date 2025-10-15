@@ -7,7 +7,7 @@ const navigation = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800/70 bg-slate-950/70">
+    <footer className="footer-div">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-10 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-base font-semibold text-white">facelook</p>
