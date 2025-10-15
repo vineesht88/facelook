@@ -104,7 +104,7 @@ export default function Header() {
         {/* Desktop nav */}
         <nav
           aria-label="Primary"
-          className="hidden md:flex ml-auto items-center gap-5 header-main-nav"
+          className="hidden md:flex ml-auto items-center gap-10 header-main-nav"
         >
           {navItems.map(({ label, path }) => (
         <NavLink
