@@ -96,9 +96,55 @@ body {
     padding: 12px 37px !important;
 }
 
-
-
-
-.brand-div{
-    
+.fl-primary-black-btn{
+    background-color: var(--primary-color) !important;
+      border-radius: 0 !important;
+    color: var(--white) !important;
+    padding: 12px 37px !important;
 }
+
+
+
+
+.page-header-banner{
+    height: 400px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .sub-page-banner{
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+    }
+    .heading-div{
+        position: absolute;
+        z-index: 5;
+        h1{
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--white);
+            text-transform: uppercase;
+            text-align: center;
+        }
+        p{
+            font-size: 19px;
+            font-weight: 300;
+            color: var(--white);
+        }
+    }
+    .banner-bg{
+     position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+    width: 100%;
+background: rgba(8, 8, 8, 0.262);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(1px);
+-webkit-backdrop-filter: blur(1px);
+    }
+}
+
