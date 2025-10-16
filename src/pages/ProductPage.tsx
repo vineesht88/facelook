@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import BrandCarousel from '../layout/carousel'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'; 
 import Pagebanner from '../assets/images/product-list.jpg'
 import product01 from '../assets/images/products/01.jpg'
 import product02 from '../assets/images/products/02.jpg'
