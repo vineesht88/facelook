@@ -44,7 +44,7 @@ export default function HomePage(): ReactElement {
 
     <section className="home-page">
       <Banner />
-      <div className='section-product-list mt-50 '>
+      <div className='section-product-list mt-50 mb-40'>
         <h2 className='section-title text-center text-4xl font-semibold'>Browse our products</h2>
         <p className='section-sub text-center text-lg font-light mt-1'>Explore our new summer collection</p>
 
@@ -54,7 +54,7 @@ export default function HomePage(): ReactElement {
               <img src={image} alt={title} />
               <h3 className='product-title font-semibold'>{title}</h3>
               <p className='product-category'>{sub}</p>
-              <p className='product-price mb-30'>
+              <p className='product-price '>
                 <img
                   src={dirhamIcon}
                   alt='Dirham currency symbol'
