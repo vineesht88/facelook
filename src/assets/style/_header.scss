@@ -88,8 +88,9 @@
 
     .page-header{
         display: flex;
-        padding: 20px 35px;
+        padding: 0 35px;
         transition: padding 0.3s ease;
+        min-height: 100px;
 
         .logo-wrapper {
             display: grid;
@@ -145,7 +146,7 @@
         }
 
         .page-header {
-            padding: 20px 35px;
+            padding: 0 35px;
 
             .header-main-nav {
                 a {

@@ -72,78 +72,82 @@ export default function Header() {
 
         </div>
       </div>
-      <div className="page-header flex items-center justify-between flex-wrap">
-        <Link to="/" className="flex flex-shrink-0 items-center gap-3">
-          <div className="logo-wrapper">
-            <img
-              src={logo}
-              alt="Facelook logo"
-              className={`logo-image ${isScrolled ? 'is-hidden' : 'is-visible'}`}
-            />
-            <img
-              src={logoWhite}
-              alt=""
-              aria-hidden="true"
-              className={`logo-image ${isScrolled ? 'is-visible' : 'is-hidden'}`}
-            />
-          </div>
-        </Link>
+      <div className="page-header flex items-center justify-center flex-wrap relative">
+  {/* Logo centered */}
+  <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-3">
+    <div className="logo-wrapper">
+      <img
+        src={logo}
+        alt="Facelook logo"
+        className={`logo-image ${isScrolled ? 'is-hidden' : 'is-visible'}`}
+      />
+      <img
+        src={logoWhite}
+        alt=""
+        aria-hidden="true"
+        className={`logo-image ${isScrolled ? 'is-visible' : 'is-hidden'}`}
+      />
+    </div>
+  </Link>
 
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden p-2 rounded focus:outline-none focus:ring"
-          aria-label="Open menu"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <svg width="24" height="24" fill="currentColor">
-        <rect x="4" y="7" width="16" height="2" rx="1" />
-        <rect x="4" y="13" width="16" height="2" rx="1" />
-          </svg>
-        </button>
+  {/* Mobile menu button (left side) */}
+  <button
+    className="md:hidden p-2 rounded focus:outline-none focus:ring absolute left-4"
+    aria-label="Open menu"
+    onClick={() => setMenuOpen((open) => !open)}
+  >
+    <svg width="24" height="24" fill="currentColor">
+      <rect x="4" y="7" width="16" height="2" rx="1" />
+      <rect x="4" y="13" width="16" height="2" rx="1" />
+    </svg>
+  </button>
 
-        {/* Desktop nav */}
-        <nav
-          aria-label="Primary"
-          className="hidden md:flex ml-auto items-center gap-10 header-main-nav"
-        >
-          {navItems.map(({ label, path }) => (
+  {/* Desktop nav (right side) */}
+  <nav
+    aria-label="Primary"
+    className="hidden md:flex items-center gap-10 absolute right-4 header-main-nav"
+  >
+    {navItems.map(({ label, path }) => (
+      <NavLink
+        key={path}
+        to={path}
+        className={({ isActive }) =>
+          `whitespace-nowrap transition-colors duration-200 ${isActive ? 'menu-active' : ''}`
+        }
+      >
+        {label}
+      </NavLink>
+    ))}
+  </nav>
+
+  {/* Mobile nav with animation */}
+  <div
+    className={`overflow-hidden transition-all duration-300 md:hidden w-full ${
+      menuOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
+    }`}
+  >
+    <nav
+      aria-label="Mobile Primary"
+      className="flex flex-col gap-2 header-main-nav"
+    >
+      {navItems.map(({ label, path }) => (
         <NavLink
           key={path}
           to={path}
           className={({ isActive }) =>
-            `whitespace-nowrap transition-colors duration-200 ${isActive ? 'menu-active' : ''}`
+            `whitespace-nowrap transition-colors duration-200 px-4 py-2 rounded ${
+              isActive ? 'menu-active' : ''
+            }`
           }
+          onClick={() => setMenuOpen(false)}
         >
           {label}
         </NavLink>
-          ))}
-        </nav>
+      ))}
+    </nav>
+  </div>
+</div>
 
-        {/* Mobile nav with animation */}
-        <div
-          className={`overflow-hidden transition-all duration-300 md:hidden w-full ${
-        menuOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
-          }`}
-        >
-          <nav
-        aria-label="Mobile Primary"
-        className="flex flex-col gap-2 header-main-nav"
-          >
-        {navItems.map(({ label, path }) => (
-          <NavLink
-            key={path}
-            to={path}
-            className={({ isActive }) =>
-          `whitespace-nowrap transition-colors duration-200 px-4 py-2 rounded ${isActive ? 'menu-active' : ''}`
-            }
-            onClick={() => setMenuOpen(false)}
-          >
-            {label}
-          </NavLink>
-        ))}
-          </nav>
-        </div>
-      </div>
     </header>
   )
 }
