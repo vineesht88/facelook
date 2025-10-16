@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import BrandCarousel from '../layout/carousel'
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Aboutbanner from '../assets/images/About-us.jpg'
+import Pagebanner from '../assets/images/About-us.jpg'
 import Aboutbanner2 from '../assets/images/about-us-img-01.jpg'
 
 import AboutIcon1 from '../assets/images/icon-1.png'
@@ -21,7 +21,7 @@ export default function AboutPage(): ReactElement {
       <div
         className="page-header-banner"
         style={{
-          backgroundImage: `url(${Aboutbanner})`,
+          backgroundImage: `url(${Pagebanner})`,
           backgroundAttachment: 'fixed',
           backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',

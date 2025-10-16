@@ -1,86 +1,76 @@
 import type { ReactElement } from 'react'
-
-
-const features = [
-  {
-    title: 'Creator Studio',
-    description: 'Plan, schedule, and publish content with collaborative workflows and detailed analytics.',
-    badge: 'New',
-  },
-  {
-    title: 'Community Spaces',
-    description: 'Host exclusive rooms, curate discussions, and reward your most engaged members.',
-  },
-  {
-    title: 'Signal Boost',
-    description: 'Grow the conversations that matter using AI-assisted moderation and smarter recommendations.',
-  },
-]
-
-const pricing = [
-  {
-    tier: 'Starter',
-    price: '$0',
-    tagline: 'Launch your community with the essentials.',
-    perks: ['Up to 3 spaces', 'Basic analytics', 'Standard privacy controls'],
-  },
-  {
-    tier: 'Creator',
-    price: '$19',
-    tagline: 'For growing creators ready to scale.',
-    perks: ['Unlimited spaces', 'Advanced insights', 'Priority support'],
-  },
-  {
-    tier: 'Studio',
-    price: "Let's talk",
-    tagline: 'Custom tooling for large organizations.',
-    perks: ['Dedicated success partner', 'Compliance tooling', 'API integrations'],
-  },
-]
+import BrandCarousel from '../layout/carousel'
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Pagebanner from '../assets/images/product-list.jpg'
+import product01 from '../assets/images/products/01.jpg'
+import product02 from '../assets/images/products/02.jpg'
+import product03 from '../assets/images/products/03.jpg'
+import product04 from '../assets/images/products/04.jpg'
+import product05 from '../assets/images/products/05.jpg'
+import product06 from '../assets/images/products/06.jpg'
+import dirhamIcon from '../assets/images/Dirham Currency Symbol.svg'
 
 export default function ProductPage(): ReactElement {
-  return (
-    <section className="product-page">
-      <header className="product-page__intro">
-        <h1 className="product-page__title">Powerful tools built for modern creators</h1>
-        <p className="product-page__summary">
-          Facelook delivers a full stack of creation, collaboration, and community features so you can focus on
-          storytelling, not spreadsheets.
-        </p>
-      </header>
+ const products = [
+    { id: 1, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product01 },
+    { id: 2, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product02 },
+    { id: 3, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product03 },
+    { id: 4, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product04 },
+    { id: 5, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product05 },
+    { id: 6, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product06 },
+  ]
 
-      <div className="product-page__features">
-        {features.map((feature) => (
-          <article key={feature.title} className="product-page__feature">
-            {feature.badge ? <span className="product-page__feature-badge">{feature.badge}</span> : null}
-            <h2>{feature.title}</h2>
-            <p>{feature.description}</p>
-          </article>
-        ))}
+  return (
+    <section >
+      <div
+        className="page-header-banner"
+        style={{
+          backgroundImage: `url(${Pagebanner})`,
+          backgroundAttachment: 'fixed',
+          backgroundPosition: 'top',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'auto',
+          minHeight: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
+      >
+        <div className="heading-div">
+          <h1>Products</h1>
+          <p>Donec varius semper magna sit amet dignissim</p>
+        </div>
+        <div className='banner-bg'></div>
+
       </div>
 
-      <div className="product-page__pricing">
-        <h2 className="product-page__pricing-title">Choose a plan that grows with you</h2>
-        <div className="product-page__plans">
-          {pricing.map((plan) => (
-            <article key={plan.tier} className="product-page__plan">
-              <div className="product-page__plan-header">
-                <p className="product-page__plan-tier">{plan.tier}</p>
-                <p className="product-page__plan-price">{plan.price}</p>
-                <p className="product-page__plan-tagline">{plan.tagline}</p>
-              </div>
-              <ul>
-                {plan.perks.map((perk) => (
-                  <li key={perk}>{perk}</li>
-                ))}
-              </ul>
-              <button type="button" className="product-page__plan-action">
-                Choose plan
-              </button>
-            </article>
+      <div className='product-list-page flex flex-wrap'>
+          {products.map(({ id, title, sub, price, image }) => (
+            <div key={id} className='product-item w-1/4'>
+              <img src={image} alt={title} />
+              <h3 className='product-title font-semibold'>{title}</h3>
+              <p className='product-category'>{sub}</p>
+              <p className='product-price mb-30'>
+                <img
+                  src={dirhamIcon}
+                  alt='Dirham currency symbol'
+                  className='product-price-icon'
+                />
+                {price}
+              </p>
+            </div>
           ))}
         </div>
+    
+
+       <div className='brand-div p-20'>
+         <Container >
+         <BrandCarousel/>
+          </Container>
       </div>
+     
     </section>
   )
 }
