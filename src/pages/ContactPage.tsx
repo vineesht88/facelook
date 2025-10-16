@@ -26,7 +26,7 @@ export default function ContactPage(): ReactElement {
         <div className='banner-bg'></div>
 
       </div>
-      <div className="contact-page"></div>
+      <div className="contact-page"></div> 
     </section>
   )
 }
