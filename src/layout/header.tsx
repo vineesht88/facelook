@@ -72,9 +72,12 @@ export default function Header() {
 
         </div>
       </div>
-      <div className="page-header flex items-center justify-center flex-wrap relative">
+      <div className="page-header flex w-full items-center justify-between md:justify-center flex-wrap gap-3 relative">
   {/* Logo centered */}
-  <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-3">
+  <Link
+    to="/"
+    className="flex items-center gap-3 md:absolute md:left-1/2 md:transform md:-translate-x-1/2"
+  >
     <div className="logo-wrapper">
       <img
         src={logo}
@@ -92,8 +95,10 @@ export default function Header() {
 
   {/* Mobile menu button (left side) */}
   <button
-    className="md:hidden p-2 rounded focus:outline-none focus:ring absolute left-4"
-    aria-label="Open menu"
+    className="md:hidden p-2 rounded focus:outline-none focus:ring order-first"
+    aria-label="Toggle navigation"
+    aria-expanded={menuOpen}
+    aria-controls="facelook-mobile-nav"
     onClick={() => setMenuOpen((open) => !open)}
   >
     <svg width="24" height="24" fill="currentColor">
@@ -122,13 +127,15 @@ export default function Header() {
 
   {/* Mobile nav with animation */}
   <div
-    className={`overflow-hidden transition-all duration-300 md:hidden w-full ${
-      menuOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
+    className={`mobile-nav-panel overflow-hidden transition-all duration-300 md:hidden w-full order-last ${
+      menuOpen ? 'is-open max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
     }`}
+    aria-hidden={!menuOpen}
   >
     <nav
+      id="facelook-mobile-nav"
       aria-label="Mobile Primary"
-      className="flex flex-col gap-2 header-main-nav"
+      className="flex flex-col gap-2 header-main-nav mobile-nav-list"
     >
       {navItems.map(({ label, path }) => (
         <NavLink
