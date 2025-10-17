@@ -245,6 +245,7 @@ backdrop-filter: blur(1px);
         box-shadow: 0 8px 24px rgba(0,0,0,0.05);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border: 1px solid var(--accent-color);
+        cursor: pointer;
 
         &:hover{
             transform: translateY(-6px);
