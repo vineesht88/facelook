@@ -7,6 +7,8 @@ import ContactPage from './pages/ContactPage'
 import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
 import Preloader from './components/Preloader'
+import WhatsAppChatButton from './components/WhatsAppChatButton'
+import ScrollToTopButton from './components/ScrollToTopButton'
 
 const NotFound = () => (
   <section className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-6 py-24 text-center">
@@ -127,6 +129,12 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      {!isPageLoading && (
+        <>
+          <WhatsAppChatButton />
+          <ScrollToTopButton />
+        </>
+      )}
     </div>
   )
 }
