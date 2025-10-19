@@ -1,7 +1,7 @@
 import Icon from '@mdi/react'
 import { mdiWhatsapp } from '@mdi/js'
 
-export const WHATSAPP_PHONE = '971564406045'
+export const WHATSAPP_PHONE = '971557613600'
 
 export default function WhatsAppChatButton() {
   const chatHref = `https://wa.me/${WHATSAPP_PHONE}`
