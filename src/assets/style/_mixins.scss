@@ -4,81 +4,13 @@ body {
     font-family: var(--font-family);
 }
 
-
-
-.slider-div {
-    display: flex;
-    gap: 20px;
-
-    .left-image,
-    .right-image {
-        flex: 1;
-
-        img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-    }
-
-    .caption-left {
-        background-color: var(--white);
-        border-radius: 0;
-        line-height: normal;
-
-        h2 {
-            color: var(--text-color);
-            font-size: 96px;
-            font-weight: 500;
-        }
-
-        p {
-            color: var(--text-color);
-            font-weight: 500;
-            
-
-            &.sub-1 {
-                font-size: 80px;
-
-
-            }
-
-            &.sub-2 {
-                font-size: 55px;
-
-            }
-
-            &.sub-3 {
-                font-size: 20px;
-
-            }
-        }
-    }
-
-    .caption-right{
-        background-color: transparent;
-        border: none;
-        backdrop-filter: none;
-        width: 80%;
-
-        h2{
-            font-size: 44px;
-            font-weight: 600;
-        }
-        p{
-            font-size: 18px;
-            font-weight: 100;
-        }
-    }
-
-}
-
-
 .book-now-btn{
     border:none !important;
     border-bottom: 1px solid var(--primary-color) !important;
     border-radius: 0 !important;
     color: var(--primary-color) !important;
+        letter-spacing: 4px !important;
+    padding: 0 !important;
 
 }
 

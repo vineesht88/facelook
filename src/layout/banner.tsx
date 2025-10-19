@@ -81,28 +81,19 @@ export default function BannerSlider({ intervalMs = 4000 }: Props) {
   return (
     <div
       className="slider-div"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        width: "100%",
-        maxWidth: "100vw",
-        height: "650px",
-        position: "relative",
-        overflow: "hidden",
-      }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* LEFT SIDE */}
-      <div style={{ position: "relative", overflow: "hidden" }}>
+      <div className="slider-column slider-column--left">
         {leftImages.map((src, i) => (
           <div key={`L-${i}`} className={`fade-layer ${i === current ? "active" : ""}`}>
             <img src={src} alt="" />
             <div className={`caption-box caption-left ${i === current ? "show" : ""}`}>
               <h2>{leftCaptions[i]?.heading}</h2>
-              <p className="sub-1 mt-1 tracking-[.35em]">{leftCaptions[i]?.sub}</p>
-              <p className="sub-2 mt-1 tracking-[.35em]">{leftCaptions[i]?.sub2}</p>
-              <p className="sub-3 mt-1 mb-6 tracking-[.35em]">{leftCaptions[i]?.sub3}</p>
+              <p className="sub-1  tracking-[.35em]">{leftCaptions[i]?.sub}</p>
+              <p className="sub-2  tracking-[.35em]">{leftCaptions[i]?.sub2}</p>
+              <p className="sub-3  tracking-[.35em]">{leftCaptions[i]?.sub3}</p>
               <Button variant="outlined" className="book-now-btn">BOOK NOW</Button>
             </div>
           </div>
@@ -110,43 +101,38 @@ export default function BannerSlider({ intervalMs = 4000 }: Props) {
       </div>
 
       {/* RIGHT SIDE */}
-      <div style={{ position: "relative", overflow: "hidden" }}>
+      <div className="slider-column slider-column--right">
         {rightImages.map((src, i) => (
           <div key={`R-${i}`} className={`fade-layer ${i === current ? "active" : ""}`}>
             <img src={src} alt="" />
             <div className={`caption-box caption-right ${i === current ? "show" : ""}`}>
               <h2>{rightCaptions[i]?.heading}</h2>
               <p className="mb-6">{rightCaptions[i]?.sub}</p>
-               <Button variant="outlined" className="fl-primary-btn" >VIEW MORE</Button>
+              <Button variant="outlined" className="fl-primary-btn">VIEW MORE</Button>
             </div>
           </div>
         ))}
       </div>
 
       {/* Controls */}
-      <button onClick={prev} disabled={animating} style={btnStyle("left")} aria-label="Previous">
+      <button
+        type="button"
+        onClick={prev}
+        disabled={animating}
+        className="slider-nav slider-nav--prev"
+        aria-label="Previous"
+      >
         <NavigateBeforeIcon />
       </button>
-      <button onClick={next} disabled={animating} style={btnStyle("right")} aria-label="Next">
+      <button
+        type="button"
+        onClick={next}
+        disabled={animating}
+        className="slider-nav slider-nav--next"
+        aria-label="Next"
+      >
         <NavigateNextIcon />
       </button>
     </div>
   );
-}
-
-function btnStyle(side: "left" | "right"): React.CSSProperties {
-  return {
-    position: "absolute",
-    top: "50%",
-    [side]: "10px",
-    transform: "translateY(-50%)",
-    background: "rgba(0,0,0,0.5)",
-    color: "#fff",
-    border: "none",
-    borderRadius: "50%",
-    width: 40,
-    height: 40,
-    cursor: "pointer",
-    zIndex: 10,
-  } as React.CSSProperties;
 }
