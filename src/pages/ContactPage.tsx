@@ -31,7 +31,7 @@ export default function ContactPage(): ReactElement {
       <div className="contact-page">
         <div style={{ maxWidth: 1200, margin: '40px auto', padding: '0 16px' }}>
           <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-        <div  style={{ flex: 1, minWidth: 280, background: '#f9f9f9', padding: 24, borderRadius: 0 }}>
+        <div  style={{ flex: 1, minWidth: 280, background: '#f9f9f9', padding: 24, borderRadius: 8 }}>
           <h2 className='text-2xl uppercase font-semibold mb-5'>Our Address</h2>
           <p className='text-lg'><strong>Face Look Opticals L. L. C</strong></p>
           <p className='font-light'>Sahara Building - Shop No. 3<br />
@@ -41,7 +41,7 @@ export default function ContactPage(): ReactElement {
           <p className='font-light'>Mon - Fri: 9:00 AM – 6:00 PM<br />Sat: 10:00 AM – 4:00 PM<br />Sun: Closed</p>
         </div>
 
-        <div style={{ flex: 1, minWidth: 280, background: '#fff', padding: 24, borderRadius: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+        <div style={{ flex: 1, minWidth: 280, background: '#fff', padding: 24, borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
           <h2 className='text-2xl uppercase font-semibold mb-5'>Enquiry Form</h2>
           <form onSubmit={(e: any) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <>

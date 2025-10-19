@@ -25,6 +25,7 @@ import Icon from '@mdi/react';
 import { mdiPhoneClassic } from '@mdi/js';
 import { mdiAt } from '@mdi/js';
 import { mdiWhatsapp } from '@mdi/js';
+import { WHATSAPP_PHONE } from '../components/WhatsAppChatButton';
 
 
 
@@ -37,6 +38,21 @@ export default function HomePage(): ReactElement {
     { id: 5, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product05 },
     { id: 6, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product06 },
   ]
+
+  const handleBookAppointment = (serviceName: string) => {
+    const message = `Hello! I'd like to book an appointment for ${serviceName}.
+Name: [Your Name]
+Preferred Date: [DD/MM/YYYY]
+Preferred Time: [HH:MM]
+Additional Notes: [Share anything we should know in advance]`
+
+    const encodedMessage = encodeURIComponent(message)
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`
+
+    if (typeof window !== 'undefined') {
+      window.open(whatsappUrl, '_blank')
+    }
+  }
 
   return (
 
@@ -51,7 +67,7 @@ export default function HomePage(): ReactElement {
         <div className='product-list-page flex flex-wrap'>
           {products.map(({ id, title, sub, price, image }) => (
             <div key={id} className='product-item w-1/3'>
-              <img src={image} alt={title} />
+              <img src={image} alt={title}  className='product-img'/>
               <h3 className='product-title font-semibold'>{title}</h3>
               <p className='product-category'>{sub}</p>
               <p className='product-price '>
@@ -141,7 +157,14 @@ export default function HomePage(): ReactElement {
                   <li><AdjustIcon className='list-icon'/> Consequat dolor duis, consectetur </li>
                   <li><AdjustIcon className='list-icon'/> Nostrum vivid, dolor lorem ipsum aliquiam</li>
                 </ul>
-                <Button variant="outlined" className="fl-secondary-btn" >Book appointment</Button>
+                <Button
+                  variant="outlined"
+                  className="fl-secondary-btn"
+                  type="button"
+                  onClick={() => handleBookAppointment('Comprehensive eye exams')}
+                >
+                  Book appointment
+                </Button>
               </div>
               </div>
               <div className=' flex flex-col '>
@@ -155,7 +178,14 @@ export default function HomePage(): ReactElement {
                   <li><AdjustIcon className='list-icon'/> Consequat dolor duis, consectetur </li>
                   <li><AdjustIcon className='list-icon'/> Nostrum vivid, dolor lorem ipsum aliquiam</li>
                 </ul>
-                <Button variant="outlined" className="fl-secondary-btn" >Book appointment</Button>
+                <Button
+                  variant="outlined"
+                  className="fl-secondary-btn"
+                  type="button"
+                  onClick={() => handleBookAppointment('Comprehensive eye exams')}
+                >
+                  Book appointment
+                </Button>
               </div>
               </div>
                <div className=' flex flex-col '>
@@ -169,7 +199,14 @@ export default function HomePage(): ReactElement {
                   <li><AdjustIcon className='list-icon'/> Consequat dolor duis, consectetur </li>
                   <li><AdjustIcon className='list-icon'/> Nostrum vivid, dolor lorem ipsum aliquiam</li>
                 </ul>
-                <Button variant="outlined" className="fl-secondary-btn" >Book appointment</Button>
+                <Button
+                  variant="outlined"
+                  className="fl-secondary-btn"
+                  type="button"
+                  onClick={() => handleBookAppointment('Comprehensive eye exams')}
+                >
+                  Book appointment
+                </Button>
               </div>
               </div>
             </div>

@@ -8,6 +8,10 @@
          flex: 1 1 calc(33.333% - 32px);
         max-width: calc(33.333% - 32px);
         border: none;
+        .product-img{
+         height: 200px;
+        object-fit: contain;
+        }
       }
     }
   }
