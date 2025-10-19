@@ -7,6 +7,7 @@
   height: 650px;
   position: relative;
   overflow: hidden;
+  gap: 12px;
 }
 
 .slider-column {
@@ -256,6 +257,7 @@
     width: 90%;
   }
   .slider-div{
+    gap: 0px;
     .slider-column--left{
       .caption-box{
         line-height: 40px;
