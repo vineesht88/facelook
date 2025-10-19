@@ -379,7 +379,11 @@ function ProductPreviewModal({ product, onClose, onEnquire }: ProductPreviewModa
       <DialogContent className='product-preview-content'>
         <div className='product-gallery'>
           <div className='product-gallery-main'>
-          
+            <img
+              src={gallery[activeIndex]}
+              alt={`${product.title} view ${activeIndex + 1}`}
+              className='product-gallery-image'
+            />
             {showNavigation && (
               <>
                 <IconButton
@@ -390,11 +394,6 @@ function ProductPreviewModal({ product, onClose, onEnquire }: ProductPreviewModa
                 >
                   <ChevronLeftIcon />
                 </IconButton>
-                  <img
-              src={gallery[activeIndex]}
-              alt={`${product.title} view ${activeIndex + 1}`}
-              className='product-gallery-image'
-            />
                 <IconButton
                   aria-label='Next product image'
                   onClick={handleNext}
@@ -415,16 +414,38 @@ function ProductPreviewModal({ product, onClose, onEnquire }: ProductPreviewModa
                   className={`product-gallery-thumbnail${index === activeIndex ? ' is-active' : ''}`}
                   onClick={() => setActiveIndex(index)}
                 >
-                  <img
-                    src={imageSrc}
-                    alt={`${product.title} thumbnail ${index + 1}`}
-                  />
+                  <img src={imageSrc} alt={`${product.title} thumbnail ${index + 1}`} />
                 </button>
               ))}
             </div>
           )}
         </div>
-    
+        <div className='product-preview-details'>
+          <h2 className='product-preview-title'>{product.title}</h2>
+          <p className='product-preview-sub'>{product.sub}</p>
+          <dl className='product-preview-meta'>
+            <div>
+              <dt>Brand</dt>
+              <dd>{product.brand}</dd>
+            </div>
+            <div>
+              <dt>Category</dt>
+              <dd>{product.category}</dd>
+            </div>
+            <div>
+              <dt>Price</dt>
+              <dd>AED {product.price.toFixed(2)}</dd>
+            </div>
+          </dl>
+          <Button
+            variant='outlined'
+            className='fl-secondary-btn product-enquiry-btn'
+            type='button'
+            onClick={() => onEnquire(product)}
+          >
+            WhatsApp enquiry
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   )
