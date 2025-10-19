@@ -332,11 +332,7 @@ Could you share more details?`
          <BrandCarousel/>
           </Container>
       </div>
-      <ProductPreviewModal
-        product={previewProduct}
-        onClose={handleModalClose}
-        onEnquire={openWhatsAppEnquiry}
-      />
+      <ProductPreviewModal product={previewProduct} onClose={handleModalClose} />
     </section>
   )
 }
@@ -344,10 +340,9 @@ Could you share more details?`
 type ProductPreviewModalProps = {
   product: Product | null
   onClose: () => void
-  onEnquire: (product: Product) => void
 }
 
-function ProductPreviewModal({ product, onClose, onEnquire }: ProductPreviewModalProps): ReactElement | null {
+function ProductPreviewModal({ product, onClose }: ProductPreviewModalProps): ReactElement | null {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
@@ -379,11 +374,7 @@ function ProductPreviewModal({ product, onClose, onEnquire }: ProductPreviewModa
       <DialogContent className='product-preview-content'>
         <div className='product-gallery'>
           <div className='product-gallery-main'>
-            <img
-              src={gallery[activeIndex]}
-              alt={`${product.title} view ${activeIndex + 1}`}
-              className='product-gallery-image'
-            />
+            
             {showNavigation && (
               <>
                 <IconButton
@@ -394,6 +385,11 @@ function ProductPreviewModal({ product, onClose, onEnquire }: ProductPreviewModa
                 >
                   <ChevronLeftIcon />
                 </IconButton>
+                <img
+              src={gallery[activeIndex]}
+              alt={`${product.title} view ${activeIndex + 1}`}
+              className='product-gallery-image'
+            />
                 <IconButton
                   aria-label='Next product image'
                   onClick={handleNext}
@@ -419,32 +415,6 @@ function ProductPreviewModal({ product, onClose, onEnquire }: ProductPreviewModa
               ))}
             </div>
           )}
-        </div>
-        <div className='product-preview-details'>
-          <h2 className='product-preview-title'>{product.title}</h2>
-          <p className='product-preview-sub'>{product.sub}</p>
-          <dl className='product-preview-meta'>
-            <div>
-              <dt>Brand</dt>
-              <dd>{product.brand}</dd>
-            </div>
-            <div>
-              <dt>Category</dt>
-              <dd>{product.category}</dd>
-            </div>
-            <div>
-              <dt>Price</dt>
-              <dd>AED {product.price.toFixed(2)}</dd>
-            </div>
-          </dl>
-          <Button
-            variant='outlined'
-            className='fl-secondary-btn product-enquiry-btn'
-            type='button'
-            onClick={() => onEnquire(product)}
-          >
-            WhatsApp enquiry
-          </Button>
         </div>
       </DialogContent>
     </Dialog>
