@@ -1,44 +1,28 @@
 import { useEffect, useState, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type ReactElement } from 'react'
+import axios from 'axios'
 import BrandCarousel from '../layout/carousel'
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import CloseIcon from '@mui/icons-material/Close'
 import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
 import Container from '@mui/material/Container'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
 import InputLabel from '@mui/material/InputLabel'
+import ListItemText from '@mui/material/ListItemText'
 import MenuItem from '@mui/material/MenuItem'
+import Pagination from '@mui/material/Pagination'
 import Select from '@mui/material/Select'
 import type { SelectChangeEvent } from '@mui/material/Select'
 import Slider from '@mui/material/Slider'
 import Pagebanner from '../assets/images/product-list.jpg'
-import product01 from '../assets/images/products/01.jpg'
-import product01Alt1 from '../assets/images/products/01-1.jpg'
-import product01Alt2 from '../assets/images/products/01-2.jpg'
-import product02 from '../assets/images/products/02.jpg'
-import product02Alt1 from '../assets/images/products/02-1.jpg'
-import product02Alt2 from '../assets/images/products/02-2.jpg'
-import product03 from '../assets/images/products/03.jpg'
-import product03Alt1 from '../assets/images/products/03-1.jpg'
-import product03Alt2 from '../assets/images/products/03-2.jpg'
-import product04 from '../assets/images/products/04.jpg'
-import product04Alt1 from '../assets/images/products/04-1.jpg'
-import product04Alt2 from '../assets/images/products/04-2.jpg'
-import product05 from '../assets/images/products/05.jpg'
-import product05Alt1 from '../assets/images/products/05-1.jpg'
-import product05Alt2 from '../assets/images/products/05-2.jpg'
-import product06 from '../assets/images/products/06.jpg'
-import product06Alt1 from '../assets/images/products/06-1.jpg'
-import product06Alt2 from '../assets/images/products/06-2.jpg'
-import product07 from '../assets/images/products/07.jpg'
-import product07Alt1 from '../assets/images/products/07-1.jpg'
-import product07Alt2 from '../assets/images/products/07-2.jpg'
 import dirhamIcon from '../assets/images/Dirham Currency Symbol.svg'
 import { WHATSAPP_PHONE } from '../components/WhatsAppChatButton'
+import type { ProductsResponse } from '../types/api'
 
 type Product = {
   id: number
@@ -51,109 +35,106 @@ type Product = {
   gallery: string[]
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    title: 'Metal Lennons',
-    sub: 'Cat-Eye Luxury',
-    category: 'Sunglasses',
-    brand: 'Shine',
-    price: 149.99,
-    image: product01,
-    gallery: [product01, product01Alt1, product01Alt2],
-  },
-  {
-    id: 2,
-    title: 'Classic Aviators',
-    sub: 'Timeless Frames',
-    category: 'Sunglasses',
-    brand: 'VistaMax',
-    price: 89.99,
-    image: product02,
-    gallery: [product02, product02Alt1, product02Alt2],
-  },
-  {
-    id: 3,
-    title: 'Urban Optics',
-    sub: 'Lightweight Comfort',
-    category: 'Optical',
-    brand: 'UrbanEye',
-    price: 129.99,
-    image: product03,
-    gallery: [product03, product03Alt1, product03Alt2],
-  },
-  {
-    id: 4,
-    title: 'Pro Sports Wraps',
-    sub: 'Active Essentials',
-    category: 'Sports',
-    brand: 'AthletiQ',
-    price: 179.99,
-    image: product04,
-    gallery: [product04, product04Alt1, product04Alt2],
-  },
-  {
-    id: 5,
-    title: 'Blue Light Shield',
-    sub: 'Digital Ready',
-    category: 'Optical',
-    brand: 'VisionGuard',
-    price: 74.99,
-    image: product05,
-    gallery: [product05, product05Alt1, product05Alt2],
-  },
-  {
-    id: 6,
-    title: 'Retro Rounders',
-    sub: 'Vintage Style',
-    category: 'Sunglasses',
-    brand: 'Shine',
-    price: 59.99,
-    image: product06,
-    gallery: [product06, product06Alt1, product06Alt2],
-  },
-  {
-    id: 7,
-    title: 'Retro Rounders',
-    sub: 'Vintage Style',
-    category: 'Sunglasses',
-    brand: 'Shine',
-    price: 59.99,
-    image: product07,
-    gallery: [product07, product07Alt1, product07Alt2],
-  },
-]
-
-const categoryOptions = ['All', ...Array.from(new Set(products.map(({ category }) => category)))]
-const brandOptions = ['All', ...Array.from(new Set(products.map(({ brand }) => brand)))]
-const MIN_PRICE = Math.floor(Math.min(...products.map(({ price }) => price)))
-const MAX_PRICE = Math.ceil(Math.max(...products.map(({ price }) => price)))
+const ITEMS_PER_PAGE = 8
 
 export default function ProductPage(): ReactElement {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All')
-  const [selectedBrand, setSelectedBrand] = useState<string>('All')
-  const [priceRange, setPriceRange] = useState<number[]>([MIN_PRICE, MAX_PRICE])
+  const [allProducts, setAllProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState<number[]>([0, 1000])
+  const [currentPage, setCurrentPage] = useState(1)
   const [previewProduct, setPreviewProduct] = useState<Product | null>(null)
 
-  const filteredProducts = products.filter(({ category, price, brand }) => {
-    const withinCategory = selectedCategory === 'All' || category === selectedCategory
-    const withinBrand = selectedBrand === 'All' || brand === selectedBrand
+  const [categoryOptions, setCategoryOptions] = useState<string[]>([])
+  const [brandOptions, setBrandOptions] = useState<string[]>([])
+  const [minPrice, setMinPrice] = useState(0)
+  const [maxPrice, setMaxPrice] = useState(1000)
+  const [isFilterChanging, setIsFilterChanging] = useState(false)
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get<ProductsResponse>(`${import.meta.env.VITE_API_URL}/products`)
+        const products = response.data.products.map(p => ({
+          ...p,
+          price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
+          category: p.category || 'Uncategorized',
+          brand: p.brand || 'Unknown',
+          gallery: p.gallery || [p.image]
+        }))
+        
+        setAllProducts(products)
+        
+        // Extract unique categories and brands
+        const categories = Array.from(new Set(products.map(p => p.category)))
+        const brands = Array.from(new Set(products.map(p => p.brand)))
+        setCategoryOptions(categories)
+        setBrandOptions(brands)
+        
+        // Set price range
+        const prices = products.map(p => p.price)
+        const min = Math.floor(Math.min(...prices))
+        const max = Math.ceil(Math.max(...prices))
+        setMinPrice(min)
+        setMaxPrice(max)
+        setPriceRange([min, max])
+      } catch (err) {
+        setError(axios.isAxiosError(err) ? err.message : 'Failed to load products')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
+  const filteredProducts = allProducts.filter(({ category, price, brand }) => {
+    const withinCategory = selectedCategories.length === 0 || selectedCategories.includes(category)
+    const withinBrand = selectedBrands.length === 0 || selectedBrands.includes(brand)
     const withinPrice = price >= priceRange[0] && price <= priceRange[1]
     return withinCategory && withinBrand && withinPrice
   })
 
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  )
+
   const handleSliderChange = (_: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
+      setIsFilterChanging(true)
       setPriceRange([value[0], value[1]])
+      setCurrentPage(1)
+      setTimeout(() => setIsFilterChanging(false), 300)
     }
   }
 
-  const handleCategoryChange = (event: SelectChangeEvent) => {
-    setSelectedCategory(event.target.value)
+  const handleCategoryChange = (event: SelectChangeEvent<string[]>) => {
+    const value = event.target.value
+    setIsFilterChanging(true)
+    setSelectedCategories(typeof value === 'string' ? value.split(',') : value)
+    setCurrentPage(1)
+    setTimeout(() => setIsFilterChanging(false), 300)
   }
 
-  const handleBrandChange = (event: SelectChangeEvent) => {
-    setSelectedBrand(event.target.value)
+  const handleBrandChange = (event: SelectChangeEvent<string[]>) => {
+    const value = event.target.value
+    setIsFilterChanging(true)
+    setSelectedBrands(typeof value === 'string' ? value.split(',') : value)
+    setCurrentPage(1)
+    setTimeout(() => setIsFilterChanging(false), 300)
+  }
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
+    setIsFilterChanging(true)
+    setCurrentPage(page)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setTimeout(() => setIsFilterChanging(false), 300)
   }
 
   const handleProductClick = (product: Product) => {
@@ -215,11 +196,10 @@ Could you share more details?`
           <p>Donec varius semper magna sit amet dignissim</p>
         </div>
         <div className='banner-bg'></div>
-
       </div>
 
       <div className='product-page-layout'>
-        <aside className='product-filter-panel'>
+        <aside className='product-filter-panel' style={{ transition: 'all 0.3s ease' }}>
           <div className='filter-group'>
             <FormControl fullWidth size='small'>
               <InputLabel id='category-filter-label' className='filter-select-label'>
@@ -228,13 +208,16 @@ Could you share more details?`
               <Select
                 labelId='category-filter-label'
                 id='category-filter'
-                value={selectedCategory}
+                multiple
+                value={selectedCategories}
                 label='Shop by Category'
                 onChange={handleCategoryChange}
+                renderValue={(selected) => selected.length === 0 ? 'All Categories' : selected.join(', ')}
               >
                 {categoryOptions.map((category) => (
                   <MenuItem key={category} value={category}>
-                    {category}
+                    <Checkbox checked={selectedCategories.indexOf(category) > -1} />
+                    <ListItemText primary={category} />
                   </MenuItem>
                 ))}
               </Select>
@@ -249,13 +232,16 @@ Could you share more details?`
               <Select
                 labelId='brand-filter-label'
                 id='brand-filter'
-                value={selectedBrand}
+                multiple
+                value={selectedBrands}
                 label='Brand'
                 onChange={handleBrandChange}
+                renderValue={(selected) => selected.length === 0 ? 'All Brands' : selected.join(', ')}
               >
                 {brandOptions.map((brand) => (
                   <MenuItem key={brand} value={brand}>
-                    {brand}
+                    <Checkbox checked={selectedBrands.indexOf(brand) > -1} />
+                    <ListItemText primary={brand} />
                   </MenuItem>
                 ))}
               </Select>
@@ -272,8 +258,8 @@ Could you share more details?`
               <Slider
                 value={priceRange}
                 onChange={handleSliderChange}
-                min={MIN_PRICE}
-                max={MAX_PRICE}
+                min={minPrice}
+                max={maxPrice}
                 valueLabelDisplay='auto'
                 getAriaLabel={() => 'Price range'}
                 step={5}
@@ -282,57 +268,139 @@ Could you share more details?`
           </div>
         </aside>
 
-        <div className='product-list-page flex flex-wrap'>
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className='product-item'
-              role='button'
-              tabIndex={0}
-              onClick={() => handleProductClick(product)}
-              onKeyDown={(event) => handleProductKeyDown(event, product)}
-              aria-label={`View details for ${product.title}`}
-            >
-              <img src={product.image} alt={product.title} />
-              <h3 className='product-title font-semibold'>{product.title}</h3>
-              <p className='product-category'>{product.sub}</p>
-              <p className='product-brand'>{product.brand}</p>
-              <p className='product-price '>
-                <img
-                  src={dirhamIcon}
-                  alt='Dirham currency symbol'
-                  className='product-price-icon'
-                />
-                {product.price.toFixed(2)}
-              </p>
-              <div className='product-card-actions'>
-                <Button
-                  variant='outlined'
-                  className='fl-secondary-btn product-enquiry-btn'
-                  type='button'
-                  onClick={(event) => handleProductEnquiryClick(event, product)}
-                >
-                  WhatsApp enquiry
-                </Button>
-              </div>
-            </div>
-          ))}
+        <div className='product-list-container'>
+          {loading && <p className='text-center mt-10'>Loading products...</p>}
+          {error && <p className='text-center mt-10 text-red-500'>Error: {error}</p>}
 
-          {filteredProducts.length === 0 && (
-            <div className='no-results'>
-              <p>No products match the selected filters.</p>
-            </div>
+          {!loading && !error && (
+            <>
+              <div 
+                className='product-list-page flex flex-wrap'
+                style={{
+                  opacity: isFilterChanging ? 0.3 : 1,
+                  transform: isFilterChanging ? 'scale(0.98)' : 'scale(1)',
+                  transition: 'opacity 0.3s ease, transform 0.3s ease',
+                  pointerEvents: isFilterChanging ? 'none' : 'auto'
+                }}
+              >
+                {paginatedProducts.map((product, index) => (
+                  <div
+                    key={product.id}
+                    className='product-item'
+                    role='button'
+                    tabIndex={0}
+                    onClick={() => handleProductClick(product)}
+                    onKeyDown={(event) => handleProductKeyDown(event, product)}
+                    aria-label={`View details for ${product.title}`}
+                    style={{
+                      animation: `fadeInUp 0.4s ease forwards ${index * 0.05}s`,
+                      opacity: 0
+                    }}
+                  >
+                    <img src={product.image} alt={product.title} />
+                    <h3 className='product-title font-semibold'>{product.title}</h3>
+                    <p className='product-category'>{product.sub}</p>
+                    <p className='product-brand'>{product.brand}</p>
+                    <p className='product-price '>
+                      <img
+                        src={dirhamIcon}
+                        alt='Dirham currency symbol'
+                        className='product-price-icon'
+                      />
+                      {product.price.toFixed(2)}
+                    </p>
+                    <div className='product-card-actions'>
+                      <Button
+                        variant='outlined'
+                        className='fl-secondary-btn product-enquiry-btn'
+                        type='button'
+                        onClick={(event) => handleProductEnquiryClick(event, product)}
+                      >
+                        WhatsApp enquiry
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+
+                {paginatedProducts.length === 0 && (
+                  <div className='no-results' style={{ animation: 'fadeIn 0.3s ease' }}>
+                    <p>No products match the selected filters.</p>
+                  </div>
+                )}
+              </div>
+
+              {totalPages > 1 && (
+                <div 
+                  className='pagination-wrapper' 
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    marginTop: '2rem', 
+                    marginBottom: '2rem',
+                    opacity: isFilterChanging ? 0.5 : 1,
+                    transition: 'opacity 0.3s ease'
+                  }}
+                >
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color='primary'
+                    size='large'
+                  />
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
-    
 
-       <div className='brand-div p-20'>
-         <Container >
-         <BrandCarousel/>
-          </Container>
+      <div className='brand-div p-20'>
+        <Container>
+          <BrandCarousel />
+        </Container>
       </div>
       <ProductPreviewModal product={previewProduct} onClose={handleModalClose} />
+      <style>
+        {`
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
+
+          .product-item {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+          }
+
+          .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+          }
+
+          .filter-group {
+            transition: all 0.3s ease;
+          }
+
+          .filter-group:hover {
+            transform: translateX(3px);
+          }
+        `}
+      </style>
     </section>
   )
 }
