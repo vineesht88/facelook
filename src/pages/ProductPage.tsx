@@ -145,7 +145,7 @@ export default function ProductPage(): ReactElement {
     const imageUrl =
       typeof window !== 'undefined' ? `${window.location.origin}${product.image}` : product.image
 
-    const message = `Hello! I'm interested in the ${product.title} (${product.brand}) from your ${product.category} collection.
+    const message = `Hello! I'm interested in the ${product.brand} (${product.brand}) from your ${product.category} collection.
 Price: AED ${product.price.toFixed(2)}
 Image: ${imageUrl}
 Could you share more details?`
@@ -291,15 +291,15 @@ Could you share more details?`
                     tabIndex={0}
                     onClick={() => handleProductClick(product)}
                     onKeyDown={(event) => handleProductKeyDown(event, product)}
-                    aria-label={`View details for ${product.title}`}
+                    aria-label={`View details for ${product.brand}`}
                     style={{
                       animation: `fadeInUp 0.4s ease forwards ${index * 0.05}s`,
                       opacity: 0
                     }}
                   >
-                    <img src={product.image} alt={product.title} />
-                    <h3 className='product-title font-semibold'>{product.title}</h3>
-                    <p className='product-category'>{product.sub}</p>
+                    <img src={product.image} alt={product.brand} />
+                    <h3 className='product-title font-semibold'>{product.brand}</h3>
+                    <p className='product-category'>{product.name}</p>
                     <p className='product-brand'>{product.brand}</p>
                     <p className='product-price '>
                       <img
@@ -455,7 +455,7 @@ function ProductPreviewModal({ product, onClose }: ProductPreviewModalProps): Re
                 </IconButton>
                 <img
               src={gallery[activeIndex]}
-              alt={`${product.title} view ${activeIndex + 1}`}
+              alt={`${product.brand} view ${activeIndex + 1}`}
               className='product-gallery-image'
             />
                 <IconButton
@@ -478,7 +478,7 @@ function ProductPreviewModal({ product, onClose }: ProductPreviewModalProps): Re
                   className={`product-gallery-thumbnail${index === activeIndex ? ' is-active' : ''}`}
                   onClick={() => setActiveIndex(index)}
                 >
-                  <img src={imageSrc} alt={`${product.title} thumbnail ${index + 1}`} />
+                  <img src={imageSrc} alt={`${product.brand} thumbnail ${index + 1}`} />
                 </button>
               ))}
             </div>
