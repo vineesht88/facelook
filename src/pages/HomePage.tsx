@@ -66,7 +66,7 @@ Additional Notes: [Share anything we should know in advance]`
 
         <div className='product-list-page flex flex-wrap'>
           {products.map(({ id, title, sub, price, image }) => (
-            <div key={id} className='product-item w-1/3'>
+            <div key={id} className='product-item w-1/3 '>
               <img src={image} alt={title}  className='product-img'/>
               <h3 className='product-title font-semibold'>{title}</h3>
               <p className='product-category'>{sub}</p>
@@ -83,10 +83,10 @@ Additional Notes: [Share anything we should know in advance]`
         </div>
       </div>
 
-      <div className='section2 flex'>
-        <div className='w-1/2 relative'>
+      <div className='section2 flex '>
+        <div className='w-1/2 relative '>
           <img src={Image1} />
-          <img src={Image2} className='absolute -right-15 bottom-0 w-1/2 z-1' />
+          <img src={Image2} className='absolute -right-15 bottom-0 w-1/2 z-1 section2-mobile-img' />
         </div>
         <div className='w-1/2'>
           <div className='txt-div '>
@@ -239,7 +239,7 @@ Additional Notes: [Share anything we should know in advance]`
         </div>
           <div className='w-1/2 relative'>
           <img src={Image3} />
-          <img src={Image4} className='absolute -left-15 bottom-0 w-1/2 z-1' />
+          <img src={Image4} className='absolute -left-15 bottom-0 w-1/2 z-1 section2-mobile-img' />
         </div>
 
       </div>
