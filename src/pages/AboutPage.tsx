@@ -25,7 +25,7 @@ export default function AboutPage(): ReactElement {
           backgroundAttachment: 'fixed',
           backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'auto',
+          backgroundSize: 'contain',
           minHeight: '400px',
           display: 'flex',
           alignItems: 'center',

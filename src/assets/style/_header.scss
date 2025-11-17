@@ -285,6 +285,7 @@
         .page-header {
             padding: 14px 14px 16px;
             gap: 0;
+            flex-direction: row-reverse;
         }
 
         .page-header .logo-wrapper {
