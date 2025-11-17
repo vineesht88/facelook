@@ -283,7 +283,7 @@
 @media (max-width: 480px) {
     .facelook-header {
         .page-header {
-            padding: 14px 14px 16px;
+            padding: 14px 14px 16px !important;
             gap: 0;
             flex-direction: row-reverse;
         }
