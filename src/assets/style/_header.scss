@@ -266,7 +266,7 @@
         }
 
         .mobile-nav-list {
-            background: rgba(15, 23, 42, 0.95);
+            background:transparent ;
             box-shadow: 0 24px 60px rgba(15, 23, 42, 0.35);
         }
 
@@ -286,6 +286,15 @@
             padding: 14px 14px 16px !important;
             gap: 0;
             flex-direction: row-reverse;
+
+            .order-first{
+                &:focus{
+                    box-shadow: none;
+                }
+                svg{
+                    filter: brightness(0) saturate(100%) invert(100%) sepia(99%) saturate(2%) hue-rotate(336deg) brightness(106%) contrast(100%);
+                }
+            }
         }
 
         .page-header .logo-wrapper {
