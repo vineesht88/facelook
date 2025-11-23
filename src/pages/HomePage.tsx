@@ -1,14 +1,10 @@
 import type { ReactElement } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Banner from '../layout/banner'
 import BrandCarousel from '../layout/carousel'
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import product01 from '../assets/images/products/01.jpg'
-import product02 from '../assets/images/products/02.jpg'
-import product03 from '../assets/images/products/03.jpg'
-import product04 from '../assets/images/products/04.jpg'
-import product05 from '../assets/images/products/05.jpg'
-import product06 from '../assets/images/products/06.jpg'
 import dirhamIcon from '../assets/images/Dirham Currency Symbol.svg'
 import Image1 from '../assets/images/img-big-001.jpg'
 import Image2 from '../assets/images/img-0001-1.png'
@@ -26,18 +22,30 @@ import { mdiPhoneClassic } from '@mdi/js';
 import { mdiAt } from '@mdi/js';
 import { mdiWhatsapp } from '@mdi/js';
 import { WHATSAPP_PHONE } from '../components/WhatsAppChatButton';
+import type { Product, CollectionsResponse } from '../types/api'
 
 
 
 export default function HomePage(): ReactElement {
-  const products = [
-    { id: 1, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product01 },
-    { id: 2, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product02 },
-    { id: 3, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product03 },
-    { id: 4, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product04 },
-    { id: 5, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product05 },
-    { id: 6, title: 'Metal Lennons', sub: 'Cat-Eye Luxury', price: '49.99', image: product06 },
-  ]
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get<CollectionsResponse>(`${import.meta.env.VITE_API_URL}/cms`)
+        setProducts(response.data.collections)
+      } catch (err) {
+        setError(axios.isAxiosError(err) ? err.message : 'An error occurred')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [])
 
   const handleBookAppointment = (serviceName: string) => {
     const message = `Hello! I'd like to book an appointment for ${serviceName}.
@@ -64,12 +72,15 @@ Additional Notes: [Share anything we should know in advance]`
         <h2 className='section-title text-center text-4xl font-semibold'>Browse our products</h2>
         <p className='section-sub text-center text-lg font-light mt-1'>Explore our new summer collection</p>
 
+        {loading && <p className='text-center mt-10'>Loading products...</p>}
+        {error && <p className='text-center mt-10 text-red-500'>Error: {error}</p>}
+
         <div className='product-list-page flex flex-wrap'>
-          {products.map(({ id, title, sub, price, image }) => (
-            <div key={id} className='product-item w-1/3 '>
-              <img src={image} alt={title}  className='product-img'/>
-              <h3 className='product-title font-semibold'>{title}</h3>
-              <p className='product-category'>{sub}</p>
+          {products.map(({ id, brand, name, price, image }) => (
+            <div key={id} className='product-item w-1/3'>
+              <img src={image} alt={brand}  className='product-img'/>
+              <h3 className='product-title font-semibold'>{brand}</h3>
+              <p className='product-category'>{name}</p>
               <p className='product-price '>
                 <img
                   src={dirhamIcon}

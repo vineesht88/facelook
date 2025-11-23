@@ -1,9 +1,35 @@
 import type { ReactElement } from 'react'
+import type { FormEvent } from 'react'
 import Pagebanner from '../assets/images/product-list.jpg'
 import BrandCarousel from '../layout/carousel'
-
+import { sendWhatsAppMessage } from '../components/WhatsAppChatButton'
 import Container from '@mui/material/Container';
+
 export default function ContactPage(): ReactElement {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    
+    const formData = new FormData(e.currentTarget)
+    const name = formData.get('name') as string
+    const email = formData.get('email') as string
+    const phone = formData.get('phone') as string
+    const message = formData.get('message') as string
+
+    const whatsappMessage = `*New Enquiry from Website*
+
+*Name:* ${name}
+*Email:* ${email}
+*Phone:* ${phone || 'Not provided'}
+
+*Message:*
+${message}`
+
+    sendWhatsAppMessage(whatsappMessage)
+    
+    // Optional: Reset form after submission
+    e.currentTarget.reset()
+  }
+
   return (
     <section >
       <div
@@ -43,7 +69,7 @@ export default function ContactPage(): ReactElement {
 
         <div style={{ flex: 1, minWidth: 280, background: '#fff', padding: 24, borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
           <h2 className='text-2xl uppercase font-semibold mb-5'>Enquiry Form</h2>
-          <form onSubmit={(e: any) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <>
               <label style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 14, color: '#111827' }}>
                 <span style={{ fontWeight: 600 }}>Name</span>

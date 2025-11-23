@@ -3,6 +3,15 @@ import { mdiWhatsapp } from '@mdi/js'
 
 export const WHATSAPP_PHONE = '971557613600'
 
+export const sendWhatsAppMessage = (message: string) => {
+  const encodedMessage = encodeURIComponent(message)
+  const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`
+  
+  if (typeof window !== 'undefined') {
+    window.open(whatsappUrl, '_blank')
+  }
+}
+
 export default function WhatsAppChatButton() {
   const chatHref = `https://wa.me/${WHATSAPP_PHONE}`
 
