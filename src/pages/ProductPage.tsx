@@ -26,10 +26,9 @@ import type { ProductsResponse } from '../types/api'
 
 type Product = {
   id: number
-  title: string
-  sub: string
-  category: string
   brand: string
+  name: string
+  category: string
   price: number
   image: string
   gallery: string[]
@@ -59,11 +58,13 @@ export default function ProductPage(): ReactElement {
       try {
         setLoading(true)
         const response = await axios.get<ProductsResponse>(`${import.meta.env.VITE_API_URL}/products`)
-        const products = response.data.products.map(p => ({
-          ...p,
+        const products: Product[] = response.data.products.map(p => ({
+          id: p.id,
+          brand: p.brand || 'Unknown',
+          name: p.name,
           price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
           category: p.category || 'Uncategorized',
-          brand: p.brand || 'Unknown',
+          image: p.image,
           gallery: p.gallery || [p.image]
         }))
         
@@ -145,7 +146,7 @@ export default function ProductPage(): ReactElement {
     const imageUrl =
       typeof window !== 'undefined' ? `${window.location.origin}${product.image}` : product.image
 
-    const message = `Hello! I'm interested in the ${product.brand} (${product.brand}) from your ${product.category} collection.
+    const message = `Hello! I'm interested in the ${product.brand} - ${product.name} from your ${product.category} collection.
 Price: AED ${product.price.toFixed(2)}
 Image: ${imageUrl}
 Could you share more details?`
@@ -300,7 +301,7 @@ Could you share more details?`
                     <img src={product.image} alt={product.brand} />
                     <h3 className='product-title font-semibold'>{product.brand}</h3>
                     <p className='product-category'>{product.name}</p>
-                    <p className='product-brand'>{product.brand}</p>
+                    <p className='product-brand'>{product.category}</p>
                     <p className='product-price '>
                       <img
                         src={dirhamIcon}
