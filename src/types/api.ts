@@ -1,11 +1,10 @@
 export interface Product {
   id: number;
-  title: string;
-  sub: string;
+  brand: string;
+  name: string;
   price: string;
   image: string;
   category?: string;
-  brand?: string;
   gallery?: string[];
 }
 
