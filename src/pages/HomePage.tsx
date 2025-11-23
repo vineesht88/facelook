@@ -94,10 +94,10 @@ Additional Notes: [Share anything we should know in advance]`
         </div>
       </div>
 
-      <div className='section2 flex'>
-        <div className='w-1/2 relative'>
+      <div className='section2 flex '>
+        <div className='w-1/2 relative '>
           <img src={Image1} />
-          <img src={Image2} className='absolute -right-15 bottom-0 w-1/2 z-1' />
+          <img src={Image2} className='absolute -right-15 bottom-0 w-1/2 z-1 section2-mobile-img' />
         </div>
         <div className='w-1/2'>
           <div className='txt-div '>
@@ -250,7 +250,7 @@ Additional Notes: [Share anything we should know in advance]`
         </div>
           <div className='w-1/2 relative'>
           <img src={Image3} />
-          <img src={Image4} className='absolute -left-15 bottom-0 w-1/2 z-1' />
+          <img src={Image4} className='absolute -left-15 bottom-0 w-1/2 z-1 section2-mobile-img' />
         </div>
 
       </div>
